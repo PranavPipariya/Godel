@@ -47,7 +47,7 @@ The architecture follows a modular design with clear separation of concerns:
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/PranavPipariya/Godel
 cd godel
 
 # Create virtual environment
