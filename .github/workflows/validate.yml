@@ -1,0 +1,28 @@
+name: Validate
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Validate tools load
+        run: |
+          python3 << 'PYEOF'
+          import sys
+          sys.path.insert(0, '.')
+          from tools.builtin import get_all_builtin_tools
+          from config.configuration import Config
+          config = Config()
+          tools = get_all_builtin_tools()
+          assert len(tools) == 16, f'Expected 16 tools, got {len(tools)}'
+          print(f'✓ All {len(tools)} tools loaded successfully')
+          PYEOF
